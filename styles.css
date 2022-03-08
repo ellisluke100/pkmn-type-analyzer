@@ -1,0 +1,95 @@
+/* GENERAL */
+
+:root {
+    --grey-color: #ecc3c3;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0; 
+}
+
+.pkmn-wrapper {
+    padding: 1rem;
+    border: 1px solid red;
+    display: inline-block;
+}
+
+.pkmn-img {
+    display: inline-block;
+    width: 12rem;
+    height: 12rem;
+    object-fit: contain;
+}
+
+.autocomplete-list-container {
+    display: inline-block;
+    position: relative;
+    margin-top: 1rem;
+    width: 12rem;
+}
+
+.autocomplete-list-container input {
+    border: 0;
+    padding: 0.5em;
+    background-color: rgb(202, 221, 177);
+    width: 100%;
+}
+
+.autocomplete-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    max-height: 20rem;
+    overflow: auto;
+    
+}
+
+*::-webkit-scrollbar {
+    width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+    background: green;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: lightgreen;
+  }
+
+.autocomplete-list li {
+    border: 1px solid lightgray;
+    border-top: unset;
+}
+
+.autocomplete-list button {
+    border: 0;
+    background-color: rgb(230, 241, 214);
+    padding: 0.5em;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    text-align: left;
+}
+
+.autocomplete-list button:hover {
+    background-color: rgb(230, 235, 223);
+}
+
+.types-container {
+    margin-top: 1rem;
+    display: flex;
+}
+
+.type-img {
+    flex: 1;
+    object-fit: contain;
+    width: 50%;
+    height: 6rem;
+}
