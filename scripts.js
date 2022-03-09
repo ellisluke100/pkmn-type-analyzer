@@ -5,15 +5,6 @@
 // Recompute the resistance matrix.
 // Update the graph display.
 
-/*
-fetch(requestString)
-    .then((response) => {
-        //Check if response fulfilled or not here right?
-        return response.json();
-    })
-    .then((data) => {outputText.textContent = data.types[0].type.name})
-}*/
-
 // https://commons.wikimedia.org/wiki/Category:Pok%C3%A9mon_types_icons#/media/File:Pok%C3%A9mon_{type-name}_Type_Icon.svg
 // Icons at: https://commons.wikimedia.org/wiki/Category:Pok%C3%A9mon_types_icons
 // Question mark URL: https://cdn-icons.flaticon.com/png/512/3524/premium/3524344.png?token=exp=1646772214~hmac=fd49d71849a9b61089ad2ec4a2bce11b
@@ -32,24 +23,24 @@ async function getAllPokemonNames() {
 async function getSinglePokemonData(pkmnName) {
     const pkmnURL = `https://pokeapi.co/api/v2/pokemon/${pkmnName}`;
     const singlePokemonResponse = await fetch(pkmnURL);
-    //const singlePokemonJSON = await singlePokemonResponse.json();
-    //const singlePokemonData = singlePokemonJSON.sprites;
-    //return singlePokemonData;
     return await singlePokemonResponse.json();
-    // sprites -> other -> official-artwork -> front-default
     
 }
 
-function onInputChange() {
-    removeAutocompleteDropdown();
+function onInputChange(e) {
+    let inputEl = e.target;
+    let wrapperIndex = inputEl.dataset.pkmn - 1;
+    let pkmnImg = pkmnWrappers[wrapperIndex].querySelector(".pkmn-img");
 
-    const inputValue = inputElement.value.toLowerCase();
+    removeAutocompleteDropdown(); //DO!
+
+    const inputValue = inputEl.value.toLowerCase();
     const filteredNames = [];
 
     if (inputValue.length === 0) {
-        if (pkmnImage.src != pkmnImageDefault) {
-            pkmnImage.src = pkmnImageDefault;
-            updateTypesDisplay([]);
+        if (pkmnImg.src != pkmnImageDefault) {
+            pkmnImg.src = pkmnImageDefault;
+            updateTypesDisplay([], wrapperIndex);
         }
         return;
     }
@@ -60,10 +51,10 @@ function onInputChange() {
         }
     })
 
-    createAutocompleteDropdown(filteredNames);
+    createAutocompleteDropdown(filteredNames, wrapperIndex);
 }
 
-function createAutocompleteDropdown(namesList) {
+function createAutocompleteDropdown(namesList, wrapperIndex) {
     const listElement = document.createElement("ul");
     listElement.className = "autocomplete-list";
     listElement.id = "autocomplete-list-id";
@@ -78,6 +69,7 @@ function createAutocompleteDropdown(namesList) {
         listElement.appendChild(listItem);
     });
 
+    const autocompleteElement = pkmnWrappers[wrapperIndex].querySelector(".autocomplete-list-container");
     autocompleteElement.appendChild(listElement);
 }
 
@@ -92,66 +84,89 @@ function removeAutocompleteDropdown() {
 function onNameButtonClick(e) {
     e.preventDefault();
     const buttonElement = e.target;
-    inputElement.value = buttonElement.textContent;
-    updatePkmnDisplay(buttonElement.textContent);
+    const inputEl = e.target.closest(".autocomplete-list-container").querySelector("input");
+    const wrapperIndex = inputEl.dataset.pkmn - 1;
+    pkmnWrappers[wrapperIndex].querySelector(".autocomplete-input").value = buttonElement.textContent;
+
+    updatePkmnDisplay(buttonElement.textContent, wrapperIndex);
     removeAutocompleteDropdown();
 }
 
-function updatePkmnDisplay(pkmnName) {
+function updatePkmnDisplay(pkmnName, wrapperIndex) {
     let pkmnData = {};
 
     getSinglePokemonData(pkmnName).then((data) => {
         pkmnData = data;
     }).then(() => {
-        //console.log(pkmnData);
-
         let imgURL = pkmnData.sprites.other["official-artwork"].front_default;
-        updatePkmnImage(imgURL);
+        updatePkmnImage(imgURL, wrapperIndex);
 
         let types = [];
         types.push(pkmnData.types[0].type.name);
         if (pkmnData.types[1]) { types.push(pkmnData.types[1].type.name)};
-        updateTypesDisplay(types);
+        updateTypesDisplay(types, wrapperIndex);
     });
 }
 
-function updateTypesDisplay(types) {
-    //Reset types
+function updatePkmnImage(imgURL, wrapperIndex) {
+    const pkmnImg = pkmnWrappers[wrapperIndex].querySelector(".pkmn-img");
+    pkmnImg.src = imgURL;
+}
+
+function updateTypesDisplay(types, wrapperIndex) {
+    let typeImgArray = [];
+    typeImgArray = pkmnWrappers[wrapperIndex].querySelectorAll(".type-img");
 
     if (types.length == 0) {
-        typeImgOne.src = pkmnTypeDefault;
-        typeImgTwo.src = pkmnTypeDefault;
+        typeImgArray[0].src = pkmnTypeDefault;
+        typeImgArray[1].src = pkmnTypeDefault;
         return;
     }
 
     let i = 1;
 
     types.forEach((type) => {
-        document.querySelector(`#type-img-${i}`).src = 
-        `/images/type_icons/${type}.svg`;
+        typeImgArray[i-1].src = `/images/type_icons/${type}.svg`
         i++;
-    })
+    });
 
     if (types.length == 1) {
-        document.querySelector("#type-img-2").src = pkmnTypeDefault;
+        typeImgArray[1].src = pkmnTypeDefault;
     }
 }
 
-function updatePkmnImage(imgURL) {
-    pkmnImage.src = imgURL;
+function loadPkmnWrappers() {
+    let i = 0;
+    let currWrapper;
+    let wrappersArray = [];
+    while (currWrapper = document.querySelector(`#pkmn-wrapper-${i+1}`)) {
+        wrappersArray.push(currWrapper);
+        i++;
+    }
+    return wrappersArray;
 }
 
-const inputElement = document.querySelector("#autocomplete-input");
-const autocompleteElement = document.querySelector("#autocomplete-container-id");
-const pkmnImage = document.querySelector('#pkmn-image');
-const pkmnImageDefault = "https://cdn-icons.flaticon.com/png/512/3524/premium/3524344.png?token=exp=1646772214~hmac=fd49d71849a9b61089ad2ec4a2bce11b"
-const pkmnTypeDefault = "https://cdn0.iconfinder.com/data/icons/octicons/1024/dash-512.png"
-const typeImgOne = document.querySelector("#type-img-1");
-const typeImgTwo = document.querySelector("#type-img-2");
+function addListenersToInputs() {
+    let inputEl;
+    let i = 0;
 
-inputElement.addEventListener("input", onInputChange);
+    while (inputEl = pkmnWrappers[i].querySelector(".autocomplete-input")) {
+        inputEl.addEventListener("input", onInputChange);
+        i++;
+        console.log(inputEl);
+        if (i == 6) { return;}
+    }
+}
+
+//const inputElement = document.querySelector("#autocomplete-input");
+//const autocompleteElement = document.querySelector("#autocomplete-container-id");
+const pkmnImageDefault = "/images/question-mark.png";
+const pkmnTypeDefault = "https://cdn0.iconfinder.com/data/icons/octicons/1024/dash-512.png"
 
 let allPokemonNames = [];
 let allPokemonNamesRequest = new Request("https://pokeapi.co/api/v2/pokemon?limit=1126"); //Theres 1126 pokemon and regional formes and stuff
 
 getAllPokemonNames();
+
+const pkmnWrappers = loadPkmnWrappers();
+addListenersToInputs();

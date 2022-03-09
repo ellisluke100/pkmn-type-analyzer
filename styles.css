@@ -13,6 +13,10 @@ body {
     padding: 0; 
 }
 
+.pkmn-team-container {
+    border: 1px solid blue;
+}
+
 .pkmn-wrapper {
     padding: 1rem;
     border: 1px solid red;
@@ -24,6 +28,7 @@ body {
     width: 12rem;
     height: 12rem;
     object-fit: contain;
+    border: 1px solid purple;
 }
 
 .autocomplete-list-container {
@@ -33,7 +38,7 @@ body {
     width: 12rem;
 }
 
-.autocomplete-list-container input {
+.autocomplete-input {
     border: 0;
     padding: 0.5em;
     background-color: rgb(202, 221, 177);
