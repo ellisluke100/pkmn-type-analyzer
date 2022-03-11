@@ -136,17 +136,9 @@ body {
     height: 100%;
 }
 
-.team-weaknesses-type-icon-container {
-    
-}
-
 .team-weaknesses-container img {
     height: 50px;
     width: 50px;
-}
-
-.conclusion-text {
-   
 }
 
 .team-rating-text {
@@ -173,9 +165,5 @@ body {
 
 #very-good {
     color: aqua;
-
-}
-
-.weakness-text {
 
 }
