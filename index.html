@@ -11,94 +11,102 @@
     <script src="scripts.js" defer></script>
 </head>
 <body>
-    <div class="pkmn-team-container">
-        <!-- Pokemon 1 -->
-        <div id="pkmn-wrapper-1" class="pkmn-wrapper">
-            <img id="pkmn-image" class="pkmn-img" src="/images/question-mark.png" alt="pokemon image">
-            <form action="" autocomplete="off">
-                <div class="autocomplete-list-container"> 
-                    <input class="autocomplete-input" type="text" placeholder="Name e.g. Abra" data-pkmn="1">
+    <div class="content-container">
+        <div class="pkmn-team-container">
+            <!-- Pokemon 1 -->
+            <div id="pkmn-wrapper-1" class="pkmn-wrapper">
+                <img id="pkmn-image" class="pkmn-img" src="images/question-mark.png" alt="pokemon image">
+                <form action="" autocomplete="off">
+                    <div class="autocomplete-list-container"> 
+                        <input class="autocomplete-input" type="text" placeholder="Name e.g. Abra" data-pkmn="1">
+                    </div>
+                </form>
+                <div class="types-container">
+                    <img class="type-img" src="images/dash-icon.png" alt="type1">
+                    <img class="type-img" src="images/dash-icon.png" alt="type2">
                 </div>
-                <!-- <button type="submit" class="btn-submit">Send</button> -->
-            </form>
-            <div class="types-container">
-                <img class="type-img" src="https://cdn0.iconfinder.com/data/icons/octicons/1024/dash-512.png" alt="type1">
-                <img class="type-img" src="https://cdn0.iconfinder.com/data/icons/octicons/1024/dash-512.png" alt="type2">
+            </div>
+            <!-- Pokemon 2 -->
+            <div id="pkmn-wrapper-2" class="pkmn-wrapper">
+                <img id="pkmn-image" class="pkmn-img" src="images/question-mark.png" alt="pokemon image">
+                <form action="" autocomplete="off">
+                    <div class="autocomplete-list-container"> 
+                        <input class="autocomplete-input" type="text" placeholder="Name e.g. Abra" data-pkmn="2">
+                    </div>
+                </form>
+                <div class="types-container">
+                    <img id="type-img" class="type-img" src="images/dash-icon.png" alt="type1">
+                    <img id="type-img" class="type-img" src="images/dash-icon.png" alt="type2">
+                </div>
+            </div>
+            <!-- Pokemon 3 -->
+            <div id="pkmn-wrapper-3" class="pkmn-wrapper">
+                <img id="pkmn-image" class="pkmn-img" src="images/question-mark.png" alt="pokemon image">
+                <form action="" autocomplete="off">
+                    <div class="autocomplete-list-container"> 
+                        <input class="autocomplete-input" type="text" placeholder="Name e.g. Abra" data-pkmn="3">
+                    </div>
+                </form>
+                <div class="types-container">
+                    <img id="type-img" class="type-img" src="images/dash-icon.png" alt="type1">
+                    <img id="type-img" class="type-img" src="images/dash-icon.png" alt="type2">
+                </div>
+            </div>
+            <!-- Pokemon 4 -->
+            <div id="pkmn-wrapper-4" class="pkmn-wrapper">
+                <img id="pkmn-image" class="pkmn-img" src="images/question-mark.png" alt="pokemon image">
+                <form action="" autocomplete="off">
+                    <div class="autocomplete-list-container"> 
+                        <input class="autocomplete-input" type="text" placeholder="Name e.g. Abra" data-pkmn="4">
+                    </div>
+                </form>
+                <div class="types-container">
+                    <img id="type-img" class="type-img" src="images/dash-icon.png" alt="type1">
+                    <img id="type-img" class="type-img" src="images/dash-icon.png" alt="type2">
+                </div>
+            </div>
+            <!-- Pokemon 5 -->
+            <div id="pkmn-wrapper-5" class="pkmn-wrapper">
+                <img id="pkmn-image" class="pkmn-img" src="images/question-mark.png" alt="pokemon image">
+                <form action="" autocomplete="off">
+                    <div class="autocomplete-list-container"> 
+                        <input class="autocomplete-input" type="text" placeholder="Name e.g. Abra" data-pkmn="5">
+                    </div>
+                </form>
+                <div class="types-container">
+                    <img id="type-img" class="type-img" src="images/dash-icon.png" alt="type1">
+                    <img id="type-img" class="type-img" src="images/dash-icon.png" alt="type2">
+                </div>
+            </div>
+            <!-- Pokemon 6 -->
+            <div id="pkmn-wrapper-6" class="pkmn-wrapper">
+                <img id="pkmn-image" class="pkmn-img" src="images/question-mark.png" alt="pokemon image">
+                <form action="" autocomplete="off">
+                    <div class="autocomplete-list-container"> 
+                        <input class="autocomplete-input" type="text" placeholder="Name e.g. Abra" data-pkmn="6">
+                    </div>
+                </form>
+                <div class="types-container">
+                    <img id="type-img" class="type-img" src="images/dash-icon.png" alt="type1">
+                    <img id="type-img" class="type-img" src="images/dash-icon.png" alt="type2">
+                </div>
             </div>
         </div>
-        <!-- Pokemon 2 -->
-        <div id="pkmn-wrapper-2" class="pkmn-wrapper">
-            <img id="pkmn-image" class="pkmn-img" src="/images/question-mark.png" alt="pokemon image">
-            <form action="" autocomplete="off">
-                <div class="autocomplete-list-container"> 
-                    <input class="autocomplete-input" type="text" placeholder="Name e.g. Abra" data-pkmn="2">
+        <div class="results-container">
+            <div class="chart-container">
+                <canvas id="chart"></canvas>
+            </div>
+            <div class="team-rating-container">
+                <p class="conclusion-text"> Your team is: </p>
+                <p class="team-rating-text"> ??? </p>
+                <div class="team-weaknesses-container">
+                    <p class="weakness-text"> Your team is weak against: </p>
+                    <div class="team-weaknesses-type-icon-container">
+                        <!-- images and stuff go here -->
+                    </div>
                 </div>
-                <!-- <button type="submit" class="btn-submit">Send</button> -->
-            </form>
-            <div class="types-container">
-                <img id="type-img" class="type-img" src="https://cdn0.iconfinder.com/data/icons/octicons/1024/dash-512.png" alt="type1">
-                <img id="type-img" class="type-img" src="https://cdn0.iconfinder.com/data/icons/octicons/1024/dash-512.png" alt="type2">
             </div>
         </div>
-        <!-- Pokemon 3 -->
-        <div id="pkmn-wrapper-3" class="pkmn-wrapper">
-            <img id="pkmn-image" class="pkmn-img" src="/images/question-mark.png" alt="pokemon image">
-            <form action="" autocomplete="off">
-                <div class="autocomplete-list-container"> 
-                    <input class="autocomplete-input" type="text" placeholder="Name e.g. Abra" data-pkmn="3">
-                </div>
-                <!-- <button type="submit" class="btn-submit">Send</button> -->
-            </form>
-            <div class="types-container">
-                <img id="type-img" class="type-img" src="https://cdn0.iconfinder.com/data/icons/octicons/1024/dash-512.png" alt="type1">
-                <img id="type-img" class="type-img" src="https://cdn0.iconfinder.com/data/icons/octicons/1024/dash-512.png" alt="type2">
-            </div>
-        </div>
-        <!-- Pokemon 4 -->
-        <div id="pkmn-wrapper-4" class="pkmn-wrapper">
-            <img id="pkmn-image" class="pkmn-img" src="/images/question-mark.png" alt="pokemon image">
-            <form action="" autocomplete="off">
-                <div class="autocomplete-list-container"> 
-                    <input class="autocomplete-input" type="text" placeholder="Name e.g. Abra" data-pkmn="4">
-                </div>
-                <!-- <button type="submit" class="btn-submit">Send</button> -->
-            </form>
-            <div class="types-container">
-                <img id="type-img" class="type-img" src="https://cdn0.iconfinder.com/data/icons/octicons/1024/dash-512.png" alt="type1">
-                <img id="type-img" class="type-img" src="https://cdn0.iconfinder.com/data/icons/octicons/1024/dash-512.png" alt="type2">
-            </div>
-        </div>
-        <!-- Pokemon 5 -->
-        <div id="pkmn-wrapper-5" class="pkmn-wrapper">
-            <img id="pkmn-image" class="pkmn-img" src="/images/question-mark.png" alt="pokemon image">
-            <form action="" autocomplete="off">
-                <div class="autocomplete-list-container"> 
-                    <input class="autocomplete-input" type="text" placeholder="Name e.g. Abra" data-pkmn="5">
-                </div>
-                <!-- <button type="submit" class="btn-submit">Send</button> -->
-            </form>
-            <div class="types-container">
-                <img id="type-img" class="type-img" src="https://cdn0.iconfinder.com/data/icons/octicons/1024/dash-512.png" alt="type1">
-                <img id="type-img" class="type-img" src="https://cdn0.iconfinder.com/data/icons/octicons/1024/dash-512.png" alt="type2">
-            </div>
-        </div>
-        <!-- Pokemon 6 -->
-        <div id="pkmn-wrapper-6" class="pkmn-wrapper">
-            <img id="pkmn-image" class="pkmn-img" src="/images/question-mark.png" alt="pokemon image">
-            <form action="" autocomplete="off">
-                <div class="autocomplete-list-container"> 
-                    <input class="autocomplete-input" type="text" placeholder="Name e.g. Abra" data-pkmn="6">
-                </div>
-                <!-- <button type="submit" class="btn-submit">Send</button> -->
-            </form>
-            <div class="types-container">
-                <img id="type-img" class="type-img" src="https://cdn0.iconfinder.com/data/icons/octicons/1024/dash-512.png" alt="type1">
-                <img id="type-img" class="type-img" src="https://cdn0.iconfinder.com/data/icons/octicons/1024/dash-512.png" alt="type2">
-            </div>
-        </div>
-    </div>
-    <div class="chart-container" style="position: relative; height:40vh; width:100%">
-        <canvas id="chart"></canvas>
     </div>
 </body>
 </html>

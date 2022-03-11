@@ -1,11 +1,8 @@
-// Flow;
-// Choose a pokemon name
-// Fetch the pokemon's OFFICIAL-ARTWORK->front-default and display. 
-// Fetch the pokemon's one or two types, and display appropriately with the actual type images.
-// Recompute the resistance matrix.
-// Update the graph display.
-
-// Dash mark (none type) URL: https://cdn0.iconfinder.com/data/icons/octicons/1024/dash-512.png
+// TO-DO
+// Better page styling
+// Graph styling and just more about that stuff
+// Conclusion element; "your team is strong, or balanced, or weak"
+//// Average the graphDataArray - if negative = weak, if around 0 = balanced, if above = strong
 
 async function getAllPokemonNames() {
     const allPokemonResponse = await fetch(allPokemonNamesRequest);
@@ -88,6 +85,11 @@ function onNameButtonClick(e) {
     const buttonElement = e.target;
     const inputEl = e.target.closest(".autocomplete-list-container").querySelector("input");
     const wrapperIndex = inputEl.dataset.pkmn - 1;
+
+    if (inputEl.value.length != 0) {
+        resistancesList[`pokemon-${wrapperIndex+1}`].fill(null);
+    }
+
     pkmnWrappers[wrapperIndex].querySelector(".autocomplete-input").value = buttonElement.textContent;
 
     updatePkmnDisplay(buttonElement.textContent, wrapperIndex);
@@ -129,7 +131,7 @@ function updateTypesDisplay(types, wrapperIndex) {
     let i = 1;
 
     types.forEach((type) => {
-        typeImgArray[i-1].src = `/images/type_icons/${type}.svg`
+        typeImgArray[i-1].src = `images/type_icons/${type}.svg`
         i++;
     });
 
@@ -161,17 +163,6 @@ function addListenersToInputs() {
 }
 
 function updateResistancesList(typeList, pkmnNum) {
-    // Find the list entry for the pkmnNum
-    // For each type in the resistances list, we need a new value
-    // So for each type in types we get the 18 types values and 
-    // combine them with the ones in our resisatnces list.
-    // How to handle 0? If 0 then... ?
-    // If 0 then just set the value. Ok.
-    // If 1, weak, 1 * 2 = 2. Easy.
-
-    //typeChart
-    //resistancesList
-
     let resistances = resistancesList[`pokemon-${pkmnNum}`];
     let resIndex = 0;
 
@@ -207,8 +198,9 @@ function updateResistancesChart() {
             let value = resistancesList[`pokemon-${pkmnNum}`][typeIndex];
 
             switch(value) {
+                case 0.25: value = 2; break;
                 case 0.5: value = 1; break;
-                case 0: value = 3; break;
+                case 0: value = 2; break;
                 case 1: value = 0; break;
                 case 2: value = -1; break;
                 case 4: value = -2; break;
@@ -222,7 +214,32 @@ function updateResistancesChart() {
     // console.log(graphDataArray);
     const chart = Chart.getChart("chart");
     chart.update();
+    updateTeamConclusion();
 
+}
+
+function updateTeamConclusion() {
+    const ratingText = document.querySelector(".team-rating-text");
+    const avg = Math.round(graphDataArray.reduce((a,b) => a + b, 0) / graphDataArray.length);
+
+    if (avg == 2 || avg > 2) {ratingText.textContent = "VERY GOOD"; ratingText.id="very-good";}
+    if (avg == 1) {ratingText.textContent = "GOOD"; ratingText.id="good";}
+    if (avg == 0) {ratingText.textContent = "OK"; ratingText.id="ok";}
+    if (avg == -1) {ratingText.textContent = "WEAK"; ratingText.id="weak";}
+    if (avg == -2 || avg < -2) {ratingText.textContent = "VERY WEAK"; ratingText.id="very-weak";}
+
+    const weaknessesContainer = document.querySelector(".team-weaknesses-type-icon-container");
+    while (weaknessesContainer.hasChildNodes()) {
+        weaknessesContainer.removeChild(weaknessesContainer.firstChild);
+    }
+
+    for (let i = 0; i < graphDataArray.length; i++) {
+        if (graphDataArray[i]<0) {
+            const imgEl = document.createElement("img");
+            imgEl.src = `images/type_icons/${typeList[i]}.svg`;
+            weaknessesContainer.appendChild(imgEl);
+        }
+    }
 }
 
 function createResistancesList() {
@@ -243,42 +260,46 @@ function displayResistancesGraph() {
     const myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        //labels: new Array(18).fill('L'),
-        labels: chartLabels,
+        labels: typeList,
         datasets: [{
             label: '# of Votes',
             data: graphDataArray,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
             ],
             borderColor: [
                 'rgba(255, 99, 132, 1)',
                 'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
             ],
             borderWidth: 1
         }]
     },
     options: {
         scales: {
+            x: {
+                grid: {
+                    display: false
+                }
+            },
             y: {
-                beginAtZero: true
-            }
-        }
+                grid: {
+                    display: false
+                },
+                beginAtZero: false,
+                max: 4,
+                min: -4
+            },
+        },
+        maintainAspectRatio: false,
     }
 });
 }
 
-const pkmnImageDefault = "/images/question-mark.png";
-const pkmnTypeDefault = "/images/dash-icon.png"
+// If the pokemon entered is the same as before, ignore it.
+
+const pkmnImageDefault = "images/question-mark.png";
+const pkmnTypeDefault = "images/dash-icon.png"
 let chartRef;
 
 let allPokemonNames = [];
@@ -291,6 +312,9 @@ const pkmnWrappers = loadPkmnWrappers();
 addListenersToInputs();
 
 let graphDataArray = new Array(18).fill(0);
+
+const typeList = Object.keys(typeChart.types);
+const overallRatingEl = document.querySelector(".team-rating-text");
 
 // Chart stuff
 displayResistancesGraph();

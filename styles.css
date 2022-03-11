@@ -13,24 +13,30 @@ body {
     padding: 0; 
 }
 
+.content-container {
+    border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+
 .pkmn-team-container {
     display: flex;
-    justify-content: space-between;
-    margin: 1rem;
+    justify-content: space-evenly;
 }
 
 .pkmn-wrapper {
     padding: 1rem;
-    border: 1px solid red;
     display: inline-block;
+    width: 10%;
 }
 
 .pkmn-img {
     display: inline-block;
-    width: 12rem;
-    height: 12rem;
+    width: 100%;
+    height: auto;
     object-fit: contain;
-    border: 1px solid purple;
 }
 
 .autocomplete-list-container {
@@ -98,4 +104,78 @@ body {
     object-fit: contain;
     width: 50%;
     height: 6rem;
+}
+
+/* RESULTS */
+
+.results-container {
+    display: flex;
+    height: 100%;
+    border: 1px solid blue;
+}
+
+.chart-container {
+    position: relative; 
+    width: 75%;
+    border: 1px solid green;
+    padding: 2rem;
+    
+}
+
+.team-rating-container {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border: 1px solid red;
+    flex: 1;
+}
+
+.team-weaknesses-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.team-weaknesses-type-icon-container {
+    
+}
+
+.team-weaknesses-container img {
+    height: 50px;
+    width: 50px;
+}
+
+.conclusion-text {
+   
+}
+
+.team-rating-text {
+    font-weight: bold;
+    font-size: 50px;
+    margin: 0;
+}
+
+#very-weak {
+    color: red;
+}
+
+#weak {
+    color: orange;
+}
+
+#ok {
+    color: lightgreen;
+}
+
+#good {
+    color: green;
+}
+
+#very-good {
+    color: aqua;
+
+}
+
+.weakness-text {
+
 }
