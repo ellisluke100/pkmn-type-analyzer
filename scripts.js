@@ -233,10 +233,14 @@ function updateTeamConclusion() {
         weaknessesContainer.removeChild(weaknessesContainer.firstChild);
     }
 
+    //typeList[0] = typeList[0].charAt(0).toUpperCase() + typeList[0].slice(1);
+
     for (let i = 0; i < graphDataArray.length; i++) {
         if (graphDataArray[i]<0) {
             const imgEl = document.createElement("img");
-            imgEl.src = `images/type_icons/${typeList[i]}.svg`;
+            imgEl.src = `images/type_icons/${
+                typeList[i].charAt(0).toLowerCase() + typeList[i].slice(1)
+            }.svg`;
             weaknessesContainer.appendChild(imgEl);
         }
     }
