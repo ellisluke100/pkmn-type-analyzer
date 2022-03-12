@@ -2,6 +2,7 @@
 
 :root {
     --grey-color: #ecc3c3;
+    --variable-color: white; /* Changes depending on the team rating */
 }
 
 * {
@@ -10,14 +11,21 @@
 
 body {
     margin: 0;
+    margin-top: 2rem;
     padding: 0; 
+    background-color: black;
 }
 
 .content-container {
-    border: 1px solid red;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 90vh;
+    width: 95vw;
+    margin: 0 auto;
+    border: 2px solid var(--variable-color);
+    border-radius: 10px;
+    box-shadow: 0 0 20px var(--variable-color);
+    background-color: rgb(22, 21, 21);
 }
 
 
@@ -29,69 +37,22 @@ body {
 .pkmn-wrapper {
     padding: 1rem;
     display: inline-block;
-    width: 10%;
+    width: 10vw;
 }
 
 .pkmn-img {
     display: inline-block;
     width: 100%;
-    height: auto;
+    height: 8rem;
     object-fit: contain;
+    
 }
 
-.autocomplete-list-container {
-    display: inline-block;
-    position: relative;
-    margin-top: 1rem;
-    width: 100%;
-}
-
-.autocomplete-input {
-    border: 0;
-    padding: 0.5em;
-    background-color: rgb(202, 221, 177);
-    width: 100%;
-}
-
-.autocomplete-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    position: absolute;
-    width: 100%;
-    max-height: 20rem;
-    overflow: auto;
-}
-
-*::-webkit-scrollbar {
-    width: 10px;
-}
-
-*::-webkit-scrollbar-track {
-    background: green;
-}
-
-*::-webkit-scrollbar-thumb {
-    background-color: lightgreen;
-  }
-
-.autocomplete-list li {
-    border: 1px solid lightgray;
-    border-top: unset;
-}
-
-.autocomplete-list button {
-    border: 0;
-    background-color: rgb(230, 241, 214);
-    padding: 0.5em;
-    cursor: pointer;
-    display: block;
-    width: 100%;
-    text-align: left;
-}
-
-.autocomplete-list button:hover {
-    background-color: rgb(230, 235, 223);
+.pkmn-img,
+.type-img {
+    border: 1px solid var(--variable-color);
+    box-shadow: 0 0 5px var(--variable-color);
+    
 }
 
 .types-container {
@@ -103,7 +64,65 @@ body {
     flex: 1;
     object-fit: contain;
     width: 50%;
-    height: 6rem;
+    height: 4rem;
+}
+
+/* INPUT / AUTOCOMPLETE LIST STUFF */
+
+.autocomplete-list-container {
+    display: inline-block;
+    position: relative;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.autocomplete-input {
+    border: 0;
+    padding: 0.5em;
+    background-color: rgba(211, 211, 211);
+    width: 100%;
+}
+
+.autocomplete-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    max-height: 20rem;
+    overflow: auto;
+    z-index: 1;
+}
+
+*::-webkit-scrollbar {
+    width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+    background: rgba(211, 211, 211);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: black;
+  }
+
+.autocomplete-list li {
+    border: 1px solid lightgray;
+    border-top: unset;
+}
+
+.autocomplete-list button {
+    border: 0;
+    background-color: rgba(211, 211, 211);
+    padding: 0.5em;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    text-align: left;
+}
+
+.autocomplete-list button:hover {
+    background-color: rgb(245, 248, 241);
 }
 
 /* RESULTS */
@@ -111,23 +130,21 @@ body {
 .results-container {
     display: flex;
     height: 100%;
-    border: 1px solid blue;
 }
 
 .chart-container {
     position: relative; 
     width: 75%;
-    border: 1px solid green;
     padding: 2rem;
-    
 }
 
 .team-rating-container {
     display: flex;
     flex-direction: column;
     padding: 2rem;
-    border: 1px solid red;
     flex: 1;
+    text-align: center;
+    color: white;
 }
 
 .team-weaknesses-container {
@@ -145,25 +162,5 @@ body {
     font-weight: bold;
     font-size: 50px;
     margin: 0;
-}
-
-#very-weak {
-    color: red;
-}
-
-#weak {
-    color: orange;
-}
-
-#ok {
-    color: lightgreen;
-}
-
-#good {
-    color: green;
-}
-
-#very-good {
-    color: aqua;
-
+    color: var(--variable-color);
 }

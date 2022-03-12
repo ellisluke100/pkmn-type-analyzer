@@ -220,20 +220,22 @@ function updateResistancesChart() {
 
 function updateTeamConclusion() {
     const ratingText = document.querySelector(".team-rating-text");
-    const avg = Math.round(graphDataArray.reduce((a,b) => a + b, 0) / graphDataArray.length);
+    //const avg = Math.round(graphDataArray.reduce((a,b) => a + b, 0) / graphDataArray.length);
+    const avg = graphDataArray.reduce((a,b)=>a+b,0)/graphDataArray.length;
 
-    if (avg == 2 || avg > 2) {ratingText.textContent = "VERY GOOD"; ratingText.id="very-good";}
-    if (avg == 1) {ratingText.textContent = "GOOD"; ratingText.id="good";}
-    if (avg == 0) {ratingText.textContent = "OK"; ratingText.id="ok";}
-    if (avg == -1) {ratingText.textContent = "WEAK"; ratingText.id="weak";}
-    if (avg == -2 || avg < -2) {ratingText.textContent = "VERY WEAK"; ratingText.id="very-weak";}
+    if (avg >= 1.5) {ratingText.textContent = "VERY GOOD";}
+    if (avg >= 0.75 && avg < 1.5) {ratingText.textContent = "GOOD";}
+    if (avg > 0 && avg < 0.75) {ratingText.textContent = "OK";}
+    if (avg == 0) {ratingText.textContent = "NEUTRAL";}
+    if (avg < 0 && avg > -1) {ratingText.textContent = "WEAK";}
+    if (avg <= -1) {ratingText.textContent = "VERY WEAK";}
+
+    console.log("Avg: ", avg);
 
     const weaknessesContainer = document.querySelector(".team-weaknesses-type-icon-container");
     while (weaknessesContainer.hasChildNodes()) {
         weaknessesContainer.removeChild(weaknessesContainer.firstChild);
     }
-
-    //typeList[0] = typeList[0].charAt(0).toUpperCase() + typeList[0].slice(1);
 
     for (let i = 0; i < graphDataArray.length; i++) {
         if (graphDataArray[i]<0) {
@@ -244,6 +246,8 @@ function updateTeamConclusion() {
             weaknessesContainer.appendChild(imgEl);
         }
     }
+    
+    changeVariableColor(ratingText.textContent);
 }
 
 function createResistancesList() {
@@ -258,6 +262,17 @@ function createResistancesList() {
     return dict;
 }
 
+function changeVariableColor(teamRating) {
+    const rootEl = document.querySelector(":root");
+    if (teamRating == "OK") { rootEl.style.setProperty("--variable-color", okRatingColor);}
+    if (teamRating == "GOOD") { rootEl.style.setProperty("--variable-color", goodRatingColor);}
+    if (teamRating == "VERY GOOD") { rootEl.style.setProperty("--variable-color", veryGoodRatingColor);}
+    if (teamRating == "WEAK") { rootEl.style.setProperty("--variable-color", weakRatingColor);}
+    if (teamRating == "VERY WEAK") { rootEl.style.setProperty("--variable-color", veryWeakRatingColor);}
+    if (teamRating == "NEUTRAL") { rootEl.style.setProperty("--variable-color", neutralRatingColor);}
+
+}
+
 function displayResistancesGraph() {
     const ctx = document.getElementById('chart');
     const chartLabels = Object.keys(typeChart.types);
@@ -269,17 +284,39 @@ function displayResistancesGraph() {
             label: '# of Votes',
             data: graphDataArray,
             backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
+                typeColors.bug,
+                typeColors.dark,
+                typeColors.dragon,
+                typeColors.electric,
+                typeColors.fairy,
+                typeColors.fighting,
+                typeColors.fire,
+                typeColors.flying,
+                typeColors.ghost,
+                typeColors.grass,
+                typeColors.ground,
+                typeColors.ice,
+                typeColors.normal,
+                typeColors.poison,
+                typeColors.psychic,
+                typeColors.rock,
+                typeColors.steel,
+                typeColors.water
             ],
+            /*
             borderColor: [
                 'rgba(255, 99, 132, 1)',
                 'rgba(54, 162, 235, 1)',
             ],
-            borderWidth: 1
+            borderWidth: 1*/
         }]
     },
     options: {
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
         scales: {
             x: {
                 grid: {
@@ -311,14 +348,23 @@ let allPokemonNamesRequest = new Request("https://pokeapi.co/api/v2/pokemon?limi
 
 getAllPokemonNames();
 let resistancesList = createResistancesList();
-
-const pkmnWrappers = loadPkmnWrappers();
-addListenersToInputs();
-
 let graphDataArray = new Array(18).fill(0);
 
 const typeList = Object.keys(typeChart.types);
-const overallRatingEl = document.querySelector(".team-rating-text");
 
 // Chart stuff
 displayResistancesGraph();
+
+const pkmnWrappers = loadPkmnWrappers();
+addListenersToInputs(); 
+const overallRatingEl = document.querySelector(".team-rating-text");
+
+// Chart stuff
+//displayResistancesGraph();
+
+const okRatingColor = "lightgreen";
+const goodRatingColor = "green";
+const veryGoodRatingColor = "aqua";
+const weakRatingColor = "orange";
+const veryWeakRatingColor = "red";
+const neutralRatingColor = "white";
